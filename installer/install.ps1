@@ -72,8 +72,8 @@ New-Item -ItemType Directory -Force (Split-Path $CaDst) | Out-Null
 Copy-Item $caPem $CaDst -Force
 
 # --- 3. Определяем свой user_id (если не задан) ---
-function Hermes([string[]]$a) {
-    $h = Get-Command hermes -ErrorAction SilentlyContinue
+function Invoke-Hermes([string[]]$a) {
+    $h = Get-Command hermes -CommandType Application,ExternalScript -ErrorAction SilentlyContinue
     if (-not $h) { Write-Host "    'hermes' не найден в PATH: выполните вручную: hermes $($a -join ' ')" -ForegroundColor Yellow; return }
     & $h.Source @a
 }
@@ -83,7 +83,7 @@ if (-not $UserId) {
 }
 if (-not $UserId) {
     Say "Останавливаю шлюз, чтобы поймать ваше сообщение боту"
-    Hermes @("gateway", "stop")
+    Invoke-Hermes @("gateway", "stop")
     Write-Host "    Откройте MAX, найдите бота «$($me.name)» и отправьте ему любое сообщение (жду 90 с)..." -ForegroundColor Yellow
     $deadline = (Get-Date).AddSeconds(90)
     while (-not $UserId -and (Get-Date) -lt $deadline) {
@@ -112,9 +112,9 @@ foreach ($k in $vals.Keys) {
 
 # --- 5. Включение плагина и перезапуск ---
 Say "Включаю плагин"
-Hermes @("plugins", "enable", "max-platform")
+Invoke-Hermes @("plugins", "enable", "max-platform")
 if (-not $NoRestart) {
     Say "Перезапускаю шлюз"
-    Hermes @("gateway", "restart")
+    Invoke-Hermes @("gateway", "restart")
 }
 Write-Host "`nГотово. Напишите боту «привет» — ответит Hermes." -ForegroundColor Green
