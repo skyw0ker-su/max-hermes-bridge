@@ -1,0 +1,8 @@
+.env
+*.env
+*.bak*
+__pycache__/
+*.pyc
+gh_token*
+*.log
+max_poll_state.json

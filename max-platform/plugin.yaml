@@ -1,0 +1,48 @@
+name: max-platform
+label: MAX
+kind: platform
+version: 1.0.0
+description: >
+  MAX (max.ru) messenger adapter for Hermes Agent. Long-polls the MAX Bot API
+  (platform-api2.max.ru), relays dialogs / group chats / channels to the agent and
+  sends answers back, with typing indicators, read receipts, image and file
+  attachments. aiohttp only — no extra packages to install.
+author: skyw0ker-su
+requires_env:
+  - name: MAX_BOT_TOKEN
+    description: "Bot token (MAX → Чат-боты → бот → ⋮ → Настройки → значок копирования)"
+    prompt: "MAX bot token"
+    password: true
+optional_env:
+  - name: MAX_ALLOWED_USERS
+    description: "Comma-separated MAX user IDs allowed to talk to the bot (empty = allow everyone)"
+    prompt: "Allowed MAX user IDs (comma-separated, or empty)"
+    password: false
+  - name: MAX_ALLOW_ALL_USERS
+    description: "Explicitly allow every MAX user (dev only)"
+    prompt: "Allow all users? (true/false)"
+    password: false
+  - name: MAX_HOME_CHANNEL
+    description: "Chat/user ID for cron and notification delivery (defaults to the first chat seen)"
+    prompt: "Home channel (or empty)"
+    password: false
+  - name: MAX_API_BASE
+    description: "Bot API base URL (default: https://platform-api2.max.ru)"
+    prompt: "API base URL"
+    password: false
+  - name: MAX_CA_BUNDLE
+    description: "Path to a CA bundle (e.g. the Минцифры root/sub certs) for TLS verification"
+    prompt: "CA bundle path (or empty)"
+    password: false
+  - name: MAX_INSECURE_TLS
+    description: "Disable TLS certificate verification (1/true) — last resort only"
+    prompt: "Disable TLS verification? (true/false)"
+    password: false
+  - name: MAX_POLL_TIMEOUT
+    description: "Long-poll timeout in seconds, 0-90 (default: 30)"
+    prompt: "Long-poll timeout"
+    password: false
+  - name: MAX_TEXT_FORMAT
+    description: "Send message text formatted as: markdown, html, or empty for plain text (default)"
+    prompt: "Text format (markdown/html/empty)"
+    password: false
